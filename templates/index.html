@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Deterministic Preservation Upscaler</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <main class="shell">
+    <section class="hero">
+      <p class="eyebrow">Local-first · deterministic · preservation-only</p>
+      <h1>4K Transparent PNG Upscaler</h1>
+      <p class="lede">Upscale artwork to 4500 × 5400 with deterministic pixel resampling. It preserves transparency and never performs OCR, AI generation, redraw, face restoration, or text reconstruction.</p>
+    </section>
+
+    <section id="dropzone" class="dropzone" tabindex="0">
+      <input id="fileInput" type="file" accept="image/png,image/jpeg,image/webp" hidden>
+      <div>
+        <strong>Drag and drop a PNG, JPG, or WEBP</strong>
+        <span>or click to choose a local file</span>
+      </div>
+    </section>
+
+    <section class="toolbar">
+      <label for="previewBackground">Preview background</label>
+      <select id="previewBackground">
+        <option value="checkerboard">Checkerboard</option>
+        <option value="black">Black</option>
+        <option value="white">White</option>
+      </select>
+      <button id="upscaleButton" type="button" disabled>Upscale 4500 x 5400</button>
+      <a id="previewButton" class="button secondary disabled" href="#" target="_blank" rel="noopener">Open Preview</a>
+      <a id="downloadButton" class="button disabled" href="#" download>Download PNG</a>
+    </section>
+
+    <details class="advanced">
+      <summary>Advanced Settings</summary>
+      <div class="grid">
+        <label>Width <input id="width" name="width" type="number" min="1" max="12000" value="4500"></label>
+        <label>Height <input id="height" name="height" type="number" min="1" max="12000" value="5400"></label>
+        <label>DPI <input id="dpi" name="dpi" type="number" min="1" max="1200" value="300"></label>
+        <label>Threshold <input id="threshold" name="threshold" type="number" min="0" max="255" value="238"></label>
+        <label>Neutrality tolerance <input id="neutralityTolerance" name="neutrality_tolerance" type="number" min="0" max="255" value="7"></label>
+        <label>Interpolation
+          <select id="interpolation" name="interpolation">
+            <option value="lanczos4" selected>Lanczos4</option>
+            <option value="cubic">Cubic</option>
+            <option value="linear">Linear</option>
+            <option value="area">Area</option>
+            <option value="nearest">Nearest</option>
+          </select>
+        </label>
+        <label>Compression level <input id="compressionLevel" name="compression_level" type="number" min="0" max="9" value="6"></label>
+        <label class="check"><input id="keepAspectRatio" name="keep_aspect_ratio" type="checkbox" checked> Keep aspect ratio</label>
+        <label class="check"><input id="transparentPadding" name="transparent_padding" type="checkbox" checked> Transparent padding</label>
+        <label class="check"><input id="mildSharpening" name="mild_sharpening" type="checkbox"> Optional mild sharpening</label>
+      </div>
+    </details>
+
+    <section class="previews">
+      <article>
+        <h2>Original preview</h2>
+        <div class="preview checkerboard"><img id="originalPreview" alt="Original preview"></div>
+      </article>
+      <article>
+        <h2>Final preview</h2>
+        <div class="preview checkerboard"><img id="finalPreview" alt="Final preview"></div>
+        <p class="preview-help">The preview below is the processed PNG. Use “Open Preview” to inspect it in a full browser tab before publishing or committing anywhere.</p>
+        <pre id="metadata"></pre>
+      </article>
+    </section>
+
+    <p id="status" role="status"></p>
+  </main>
+  <script src="/static/app.js"></script>
+</body>
+</html>
